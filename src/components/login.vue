@@ -25,29 +25,45 @@ export default {
   },
   methods: {
     //发送登录请求
-    handleLogin() {
-      this.$http
-        .post(`login`, this.formdata)
-        .then(res => {
-          console.log(res);
-          const {
-            data: {
-              data,
-              meta: { msg, status }
-            }
-          } = res;
-          if (status === 200) {
-            //进入home组件
-            this.$router.push({
-              name: "home"
-            });
-          } else {
-            this.$message.error(msg);
-          }
-        })
-        .catch(err => {
-          console.log(err);
+    async handleLogin() {
+      const res = await this.$http.post(`login`, this.formdata);
+      const {
+        data: {
+          data: { token },
+          meta: { msg, status }
+        }
+      } = res;
+      if (status === 200) {
+        //保存用户数据
+        localStorage.setItem("token", token);
+        //进入home组件
+        this.$router.push({
+          name: "home"
         });
+      } else {
+        this.$message.error(msg);
+      }
+      // 处理异步结果
+      //         .then(res => {
+      //           console.log(res);
+      //           const {
+      //             data: {
+      //               data,
+      //               meta: { msg, status }
+      //             }
+      //           } = res;
+      //           if (status === 200) {
+      //             //进入home组件
+      //             this.$router.push({
+      //               name: "home"
+      //             });
+      //           } else {
+      //             this.$message.error(msg);
+      //           }
+      //         })
+      //         .catch(err => {
+      //           console.log(err);
+      //         });
     }
   }
 };
