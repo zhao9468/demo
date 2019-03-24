@@ -33,9 +33,11 @@ export default {
           meta: { msg, status }
         }
       } = res;
+      //   console.log(res);
       if (status === 200) {
         //保存用户数据
         localStorage.setItem("token", token);
+        // console.log(token);
         //进入home组件
         this.$router.push({
           name: "home"
