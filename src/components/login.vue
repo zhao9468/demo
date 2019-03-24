@@ -37,6 +37,10 @@ export default {
             }
           } = res;
           if (status === 200) {
+            //进入home组件
+            this.$router.push({
+              name: "home"
+            });
           } else {
             this.$message.error(msg);
           }
